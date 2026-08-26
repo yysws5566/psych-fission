@@ -1,0 +1,102 @@
+examples:
+  - id: psych-fission-copy
+    title:
+      zh: 模型裂变文案
+      en: Fission Copy by Psychology Models
+    description:
+      zh: 5 Whys挖根因后，36个心理模型竞拍执笔各出一版，机制可验证
+      en: After 5-Whys root-cause digging, 36 psychology models bid and write one version each
+    prompt:
+      zh: |-
+        请用心理模型裂变工坊裂变文案：
+
+        产品/任务：{{产品与卖点}}
+        受众画像：{{年龄/身份/核心动机}}
+        成功指标：{{如：3秒完播・转化成本・回复率}}
+
+        先用5 Whys挖受众购买根因，再让36个模型卡竞拍，TOP席位执笔各出一版完整产物（机制落点标注），加权投票后主编综合出模型组合公式，交付md产物集+HTML报告。
+      en: |-
+        Please run the psychology-model fission workshop:
+
+        Product/task: {{product and selling points}}
+        Audience: {{age / identity / core motivation}}
+        Success metric: {{e.g., 3s retention, conversion cost}}
+
+        First dig the purchase root cause with 5 Whys, then let the 36 model cards bid, have top seats each write a full version (with mechanism callouts), vote with weights, and synthesize a model-combination formula. Deliver md collection + HTML report.
+
+  - id: psych-fission-ad
+    title:
+      zh: 模型裂变广告素材
+      en: Fission Ad Creatives by Models
+    description:
+      zh: 投放素材按心理机制分版，CTR差异可反推机制有效性
+      en: Ad creatives split by psychological mechanism, so CTR deltas attribute to mechanisms
+    prompt:
+      zh: |-
+        请用心理模型裂变工坊裂变广告素材：
+
+        投放产品：{{产品与落地页}}
+        渠道：{{如：千川/腾讯广告/聚光}}
+        受众定向：{{人群包}}
+        成功指标：{{CTR・转化成本}}
+
+        5 Whys挖根因→模型竞拍→每机制一版素材（机制落点标注）→投票→模型组合公式。全部版本过广告法禁词扫描。
+      en: |-
+        Please run the psychology-model fission workshop for ad creatives:
+
+        Product: {{product and landing page}}
+        Channel: {{e.g., Ocean Engine / Tencent Ads / Juguang}}
+        Targeting: {{audience}}
+        Success metric: {{CTR, conversion cost}}
+
+        5-Whys → model bidding → one creative per mechanism (with callouts) → voting → combination formula. Scan all versions against ad-law banned words.
+
+  - id: psych-diagnosis
+    title:
+      zh: 文案心理机制体检
+      en: Copy Mechanism Audit
+    description:
+      zh: 给已有文案逐段扫心理机制，标注已用/漏用，只改机制不动风格
+      en: Scan existing copy for psychological mechanisms, mark used/missing, fix mechanisms only
+    prompt:
+      zh: |-
+        请用心理模型裂变工坊的诊断模式，给我这份文案做心理机制体检：
+
+        文案原文：{{粘贴文案全文}}
+        受众：{{目标受众画像}}
+        目标：{{希望提升什么指标}}
+
+        逐段标注实际触发的心理模型，给出机制覆盖图（已用/漏用）、机制-受众错配审计，以及只动机制触发点的最小改动版改写稿。
+      en: |-
+        Please run the diagnosis mode of the psychology-model fission workshop on my copy:
+
+        Copy text: {{paste full copy}}
+        Audience: {{target audience}}
+        Goal: {{metric to improve}}
+
+        Tag the psychological model triggered by each paragraph, produce a mechanism coverage map (used/missing), audit mechanism-audience mismatches, and rewrite with minimal changes that only touch mechanism triggers.
+
+  - id: psych-why-analysis
+    title:
+      zh: 为什么人买东西
+      en: Why People Buy
+    description:
+      zh: 单独跑5 Whys根因分析，回答受众购买的深层动机
+      en: Standalone 5-Whys root-cause analysis of deep purchase motivation
+    prompt:
+      zh: |-
+        请用心理模型裂变工坊分析消费者行为：
+
+        产品/服务：{{品类或具体产品}}
+        受众：{{人群描述}}
+        现象：{{想解释的行为，如「看了不买/买了不晒/复购率低」}}
+
+        用5 Whys挖到身份/情绪层根因，列出与此根因匹配度最高的5个心理模型及各自解释，最后给「他不是在买X，他是在买___」的根因结论。
+      en: |-
+        Please analyze consumer behavior with the psychology-model fission workshop:
+
+        Product/service: {{category or product}}
+        Audience: {{population}}
+        Phenomenon: {{behavior to explain, e.g., "views but no purchase"}}
+
+        Dig to the identity/emotion layer with 5 Whys, list the top 5 matching psychological models with explanations, and conclude with the "they're not buying X, they're buying ___" insight.

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模型裂变报告 - {{TASK_KEYWORD}}</title>
+<style>
+  /* ============ 心理模型裂变报告模板 · 青×琥珀（与人格裂变品红区分） ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --teal: #0D9488; --teal-soft: #CCFBF1;
+    --amber: #F59E0B; --amber-soft: #FEF3C7;
+    --bg: #FAFAFC; --bg-soft: #F4F4F8;
+    --surface: #FFFFFF; --border: #E5E7EB; --border-soft: #F1F2F6;
+    --text: #0F172A; --text-2: #475569; --text-3: #94A3B8;
+    --success: #10B981; --success-soft: #D1FAE5;
+    --warning: #F59E0B; --warning-soft: #FEF3C7;
+    --danger: #FE2C55; --danger-soft: #FFE5EC;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 20px 40px rgba(13, 148, 136, 0.12), 0 8px 16px rgba(15, 23, 42, 0.04);
+  }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(13, 148, 136, 0.07), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 95% 30%, rgba(245, 158, 11, 0.07), transparent 60%);
+    background-attachment: fixed;
+    color: var(--text); line-height: 1.8; font-size: 15px; padding: 32px 24px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1180px; margin: 0 auto; }
+
+  /* Hero */
+  .hero {
+    position: relative; overflow: hidden; color: #fff;
+    background: linear-gradient(135deg, #0D9488 0%, #14B8A6 45%, #F59E0B 120%);
+    border-radius: 28px; padding: 40px 44px; margin-bottom: 24px; box-shadow: var(--shadow-lg);
+  }
+  .hero::before { content: ''; position: absolute; top: -120px; right: -100px; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%); border-radius: 50%; filter: blur(40px); }
+  .hero::after { content: '🧠'; position: absolute; bottom: -50px; right: -10px; font-size: 200px; line-height: 1; opacity: 0.14; }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+    background: rgba(255,255,255,0.2); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+  .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.3; }
+  .hero-meta { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; opacity: 0.92; margin-bottom: 22px; }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-verdict { background: rgba(255,255,255,0.18); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 18px 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4); font-size: 15px; line-height: 1.8; }
+  .hero-verdict .hl { font-weight: 700; }
+  .hero-verdict .icon { display: inline-flex; width: 28px; height: 28px; background: #fff; color: var(--teal);
+    border-radius: 50%; align-items: center; justify-content: center; font-size: 16px; font-weight: 700;
+    margin-right: 8px; vertical-align: middle; }
+
+  /* Bento KPI */
+  .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-bottom: 24px; }
+  .b-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 20px; padding: 24px;
+    box-shadow: var(--shadow-sm); transition: 220ms cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden; }
+  .b-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .b-card.span-3 { grid-column: span 3; }
+  .b-card.gradient::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--amber)); }
+  .b-label { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase;
+    letter-spacing: 0.06em; margin-bottom: 10px; }
+  .b-value { font-family: Consolas, "Courier New", monospace; font-size: 36px; font-weight: 800; line-height: 1.1;
+    background: linear-gradient(135deg, var(--teal), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .b-value.success { background: linear-gradient(135deg, #10B981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .b-sub { font-size: 12px; color: var(--text-3); margin-top: 6px; }
+
+  /* Section 通用 */
+  section { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 24px;
+    padding: 32px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+  .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .sec-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--teal-soft), var(--amber-soft));
+    border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .sec-head h2 { font-size: 20px; font-weight: 700; }
+  .sec-head .sub { color: var(--text-3); font-size: 13px; margin-top: 2px; font-weight: 400; }
+  .notice-banner { display: flex; align-items: flex-start; gap: 10px; background: var(--warning-soft);
+    border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 12px 16px; margin-bottom: 18px;
+    font-size: 13px; color: #92400E; line-height: 1.8; }
+
+  /* 5 Whys 根因链 */
+  .why-chain { display: flex; flex-direction: column; gap: 0; margin-bottom: 14px; }
+  .why-node { display: flex; gap: 14px; align-items: flex-start; }
+  .why-tag { flex: none; width: 74px; text-align: center; font-size: 11px; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, var(--teal), #14B8A6); border-radius: 8px; padding: 3px 0; margin-top: 2px; }
+  .why-node .txt { font-size: 14.5px; color: var(--text-2); line-height: 1.8; padding-bottom: 12px;
+    border-left: 2px dashed var(--border); margin-left: -42px; padding-left: 48px; }
+  .why-node:last-child .txt { border-left: none; }
+  .why-root { background: linear-gradient(90deg, var(--amber-soft), #fff); border: 1px solid rgba(245,158,11,.4);
+    border-radius: 14px; padding: 14px 18px; font-size: 15px; font-weight: 800; color: #92400E; line-height: 1.8; }
+  .why-root small { display: block; font-size: 12.5px; font-weight: 400; color: var(--text-3); margin-top: 3px; }
+
+  /* 竞拍面板 */
+  .bid-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bid-name { width: 170px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .bid-bar-wrap { flex: 1; background: var(--bg-soft); border-radius: 100px; height: 22px; position: relative; overflow: hidden; }
+  .bid-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--teal), var(--amber));
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 10px;
+    color: #fff; font-size: 11px; font-weight: 700; font-family: Consolas, monospace; }
+  .bid-bar.combo { background: linear-gradient(90deg, #FE2C55, #F97316); }
+  .bid-badge { font-size: 10px; padding: 1px 7px; border-radius: 100px; font-weight: 700; flex-shrink: 0;
+    background: var(--bg-soft); color: var(--text-2); }
+  .bid-badge.combo { background: var(--danger-soft); color: var(--danger); }
+
+  /* 模型作品卡（机制→钩子→利弊→落点→数据条） */
+  .work-card { border: 1px solid var(--border-soft); border-radius: 18px; margin-bottom: 16px;
+    overflow: hidden; background: var(--surface); transition: 200ms; }
+  .work-card:hover { box-shadow: var(--shadow-md); }
+  .work-card.winner { border: 1.5px solid rgba(16,185,129,.5); }
+  .work-card.combo { border: 1.5px solid rgba(254,44,85,.35); }
+  .work-head { display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-bottom: 1px solid var(--border-soft); }
+  .work-avatar { flex: none; width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--teal-soft), var(--amber-soft));
+    display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .work-name { font-size: 17px; font-weight: 800; }
+  .work-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
+  .work-chip { font-size: 11.5px; background: var(--bg-soft); color: var(--text-2); border-radius: 100px; padding: 1px 10px; }
+  .work-chip.hot { background: var(--teal-soft); color: #0F766E; font-weight: 700; }
+  .work-score { margin-left: auto; text-align: right; flex: none; }
+  .work-score .num { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--teal), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .work-score span { display: block; font-size: 11px; color: var(--text-3); }
+  .work-mech { padding: 10px 22px; font-size: 13.5px; color: #0F766E; font-weight: 700;
+    background: linear-gradient(90deg, var(--teal-soft) 0%, #fff 70%); border-bottom: 1px solid var(--border-soft); }
+  .work-hook { padding: 14px 22px; font-size: 17.5px; font-weight: 800; color: #92400E; line-height: 1.6;
+    background: linear-gradient(90deg, var(--amber-soft) 0%, #fff 80%); border-bottom: 1px solid var(--border-soft); }
+  .work-hook small { display: block; font-size: 12.5px; color: var(--text-3); font-weight: 400; margin-top: 3px; }
+  .work-pair { display: grid; grid-template-columns: 1fr 1fr; }
+  .work-pair > div { padding: 13px 22px; font-size: 14.5px; }
+  .work-pair .pro { border-right: 1px dashed var(--border-soft); }
+  .work-pair .lab { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 6px; padding: 0 8px; margin-bottom: 6px; }
+  .lab.g { background: var(--success-soft); color: #15803D; }
+  .lab.r { background: var(--danger-soft); color: #B91C1C; }
+  .work-pair p { margin-bottom: 5px; color: var(--text-2); }
+  .work-foot { display: flex; align-items: center; gap: 16px; padding: 10px 22px; background: var(--bg-soft);
+    border-top: 1px solid var(--border-soft); font-size: 12.5px; color: var(--text-2); flex-wrap: wrap; }
+  .work-foot .meter { width: 110px; height: 8px; background: #DFE9E7; border-radius: 100px; overflow: hidden; }
+  .work-foot .meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--teal), var(--amber)); }
+  .work-foot .vt { margin-left: auto; font-weight: 700; color: #0F766E; }
+  .work-foot .vt .win { background: var(--teal-soft); border-radius: 8px; padding: 2px 10px; }
+
+  /* 机制落点标签（正文中行内标注用） */
+  .mech-tag { display: inline-block; font-size: 10.5px; font-weight: 800; color: #0F766E;
+    background: var(--teal-soft); border-radius: 6px; padding: 0 6px; margin-left: 6px; vertical-align: middle; }
+
+  /* 投票矩阵 */
+  .vote-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .vote-table th, .vote-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  .vote-table th { color: var(--text-3); font-weight: 600; font-size: 11.5px; }
+  .vote-table tr:last-child td { border-bottom: none; }
+  .vote-pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 700; margin: 1px 2px 1px 0; }
+  .vote-pill.hook { background: var(--amber-soft); color: #B45309; }
+  .vote-pill.conv { background: var(--teal-soft); color: #0F766E; }
+  .vote-pill.risk { background: var(--danger-soft); color: var(--danger); }
+  .award-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+  .award-card { border-radius: 16px; padding: 18px 20px; border: 1px solid var(--border-soft); }
+  .award-card.hook { background: linear-gradient(135deg, var(--amber-soft), #fff); border-color: rgba(245,158,11,0.4); }
+  .award-card.conv { background: linear-gradient(135deg, var(--teal-soft), #fff); border-color: rgba(13,148,136,0.4); }
+  .award-card.risk { background: linear-gradient(135deg, var(--danger-soft), #fff); border-color: rgba(254,44,85,0.3); }
+  .award-card .a-t { font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+  .award-card .a-w { font-size: 15px; font-weight: 800; }
+  .award-card .a-s { font-size: 12px; color: var(--text-2); margin-top: 4px; font-family: Consolas, monospace; }
+
+  /* 模型组合公式 */
+  .formula { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 16px 20px;
+    border-radius: 14px; background: linear-gradient(135deg, var(--teal-soft), #fff);
+    border: 1px solid rgba(13,148,136,.35); margin-bottom: 14px; }
+  .formula .f-chip { font-size: 13.5px; font-weight: 800; color: #0F766E; background: #fff;
+    border: 1px solid rgba(13,148,136,.4); border-radius: 10px; padding: 5px 12px; }
+  .formula .f-op { font-size: 15px; font-weight: 800; color: var(--amber); }
+  .formula .f-note { width: 100%; font-size: 12.5px; color: var(--text-2); }
+
+  /* 主编综合 */
+  .syn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .syn-box { border-radius: 16px; padding: 18px 20px; border: 1px solid var(--border-soft); }
+  .syn-box.rec { background: linear-gradient(135deg, var(--success-soft), #fff); border-color: rgba(16,185,129,0.35); }
+  .syn-box.ab { background: linear-gradient(135deg, var(--teal-soft), #fff); border-color: rgba(13,148,136,0.35); }
+  .syn-box .k { font-size: 13px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .syn-box .v { font-size: 14.5px; color: var(--text-2); line-height: 1.8; }
+  .syn-box .v .hl { color: var(--text); font-weight: 700; }
+  .cond-item { display: flex; gap: 14px; padding: 16px 18px; border-radius: 14px; margin-bottom: 10px;
+    background: var(--bg-soft); border: 1px solid var(--border-soft); }
+  .cond-if { flex-shrink: 0; width: 220px; font-size: 13px; font-weight: 800; color: #0F766E; padding-top: 2px; }
+  .cond-then { font-size: 14.5px; color: var(--text-2); line-height: 1.8; }
+  .cond-then .hl { color: var(--text); font-weight: 700; }
+
+  /* 黑马与全会总结 */
+  .dark-box { border: 1.5px dashed rgba(245,158,11,.5); border-radius: 16px; padding: 20px 24px;
+    background: linear-gradient(135deg, var(--amber-soft), #fff); }
+  .dark-box .dk-hook { font-size: 17px; font-weight: 800; color: #92400E; margin-bottom: 10px; }
+  .dark-box .dk-why { font-size: 14.5px; color: var(--text-2); line-height: 1.9; }
+  .dark-box .dk-why .hl { color: var(--text); font-weight: 700; }
+  .sumcard { margin-top: 22px; border: 2px solid var(--teal); border-radius: 18px; overflow: hidden; background: var(--surface); }
+  .sumcard .cap { background: linear-gradient(135deg, var(--teal), var(--amber)); color: #fff;
+    padding: 12px 22px; font-size: 17px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .sumcard .cap small { font-weight: 400; font-size: 12px; opacity: .85; }
+  .sum-body { padding: 20px 22px; }
+  .sum-verdict { font-size: 16.5px; font-weight: 800; color: #0F766E; line-height: 1.8; margin-bottom: 16px; }
+  .sum-awards { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .sum-awards .aw-chip { font-size: 13px; border-radius: 10px; padding: 7px 14px; font-weight: 700; }
+  .aw-chip.a { background: var(--amber-soft); color: #92400E; }
+  .aw-chip.b { background: var(--teal-soft); color: #0F766E; }
+  .aw-chip.c { background: var(--danger-soft); color: #991B1B; }
+  .aw-chip.d { background: var(--success-soft); color: #166534; }
+  .sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sum-box { border: 1px solid var(--border-soft); border-radius: 12px; padding: 13px 16px; }
+  .sum-box h4 { font-size: 13px; color: #0F766E; margin-bottom: 8px; }
+  .sum-box ul { margin-left: 16px; font-size: 14px; color: var(--text-2); }
+  .sum-box li { margin-bottom: 6px; line-height: 1.8; }
+  .sum-if { border-top: 1px dashed var(--border-soft); margin-top: 14px; padding-top: 14px; }
+  .sum-if h4 { font-size: 13px; color: #0F766E; margin-bottom: 10px; }
+  .ifrow { display: flex; gap: 10px; align-items: baseline; font-size: 14px; margin-bottom: 7px; }
+  .ifrow .c { flex: none; max-width: 280px; font-weight: 700; color: var(--text-2); }
+  .ifrow .arrow { flex: none; color: var(--teal); font-weight: 800; }
+  .ifrow .r { color: var(--text-2); }
+  footer { text-align: center; margin-top: 32px; padding: 24px; color: var(--text-3); font-size: 13px; line-height: 2; }
+  footer .brand { background: linear-gradient(135deg, var(--teal), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .b-card.span-3 { grid-column: span 6; }
+    .syn-grid { grid-template-columns: 1fr; }
+    .award-row { grid-template-columns: 1fr; }
+    .cond-item { flex-direction: column; gap: 6px; }
+    .cond-if { width: auto; }
+    .hero h1 { font-size: 26px; }
+    .work-pair { grid-template-columns: 1fr; }
+    .work-pair .pro { border-right: none; border-bottom: 1px dashed var(--border-soft); }
+    .sum-grid { grid-template-columns: 1fr; }
+    .ifrow { flex-wrap: wrap; }
+    .ifrow .c { max-width: 100%; }
+    .why-node .txt { margin-left: 0; padding-left: 12px; }
+  }
+  @media (max-width: 600px) {
+    body { padding: 16px 12px 60px; } .hero { padding: 28px 24px; } section { padding: 24px 20px; }
+    .b-card.span-3 { grid-column: span 12; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ 1. Hero：任务+根因+主编推荐 ============ -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">🧠 心理模型裂变工坊 · 机制驱动的多版本交付报告</span>
+      <h1>「{{TASK：任务原文}}」</h1>
+      <div class="hero-meta">
+        <span>📅 {{DATE}}</span>
+        <span>模型库36张</span>
+        <span>竞拍通过 {{QUALIFIED}}张</span>
+        <span>执笔 {{WRITERS}}张</span>
+        <span>成功指标 {{METRIC}}</span>
+      </div>
+      <div class="hero-verdict">
+        <span class="icon">🧠</span><span class="hl">主编推荐</span>：{{VERDICT_ONELINE：模型组合公式+一句理由，结果导向}}
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ 免责横幅（广告类/医疗/金融必含；非广告类可删） ============ -->
+  <div class="notice-banner">
+    <span>⚠️</span>
+    <span>{{DISCLAIMER_BANNER：广告类固定「所有版本已过广告法禁词扫描，标注〔风险〕的表述投放前二次确认，不构成投放效果保证」；医疗/金融替换对应提示}}</span>
+  </div>
+
+  <!-- ============ 2. Bento KPI ============ -->
+  <div class="bento">
+    <div class="b-card span-3 gradient"><div class="b-label">🧠 模型库</div><div class="b-value">36</div><div class="b-sub">六族心理模型卡</div></div>
+    <div class="b-card span-3 gradient"><div class="b-label">🎫 竞拍通过</div><div class="b-value">{{QUALIFIED}}</div><div class="b-sub">机制匹配≥60</div></div>
+    <div class="b-card span-3 gradient"><div class="b-label">✍️ 执笔/评审</div><div class="b-value">{{WRITERS}}/{{VOTERS}}</div><div class="b-sub">TOP执笔・评审团投票</div></div>
+    <div class="b-card span-3 gradient"><div class="b-label">📦 交付版本</div><div class="b-value success">{{VERSIONS}}</div><div class="b-sub">推荐{{REC_NO}}・黑马{{DARK_NO}}</div></div>
+  </div>
+
+  <!-- ============ 3. 根因挖掘（5 Whys链） ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">⛏️</div>
+      <div><h2>根因挖掘</h2><div class="sub">先挖根因再选模型——5 Whys链条决定竞拍方向</div></div>
+    </div>
+    <!-- 每个 Why 一节点，层层向下；节点文本=受众购买行为的一层归因 -->
+    <div class="why-chain">
+      <div class="why-node"><span class="why-tag">WHY 1</span><span class="txt">{{WHY1：表层行为归因，如「她买松子因为孩子要吃零食」}}</span></div>
+      <div class="why-node"><span class="why-tag">WHY 2</span><span class="txt">{{WHY2：深一层，如「为什么在意零食→怕外面零食不干净」}}</span></div>
+      <div class="why-node"><span class="why-tag">WHY 3</span><span class="txt">{{WHY3：更深，如「为什么怕→出过事/看到过负面新闻，怕自己没把关」}}</span></div>
+      <div class="why-node"><span class="why-tag">WHY 4</span><span class="txt">{{WHY4：触及情绪层，如「没把关意味着什么→失职感」}}</span></div>
+      <div class="why-node"><span class="why-tag">WHY 5</span><span class="txt">{{WHY5：身份层根因，如「她真正在维护的是『好妈妈』的自我认同」}}</span></div>
+    </div>
+    <div class="why-root">{{ROOT：根因句式「他不是在买X，他是在买___」}}<small>竞拍基准：所有模型打分围绕此根因展开</small></div>
+  </section>
+
+  <!-- ============ 4. 竞拍面板 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">🎫</div>
+      <div><h2>模型竞拍</h2><div class="sub">根因匹配×0.4+受众适配×0.3+机制稀缺性×0.3，低于60出局</div></div>
+    </div>
+    <!-- 每张执笔模型一行；组合席用 .combo 配色与徽标；F族结构模型（双系统/心流节奏）入席时徽标注「F容器」——它管节奏骨架不产内容版 -->
+    <div class="bid-row">
+      <div class="bid-name">{{EMOJI}} {{MODEL_NAME}}</div>
+      <div class="bid-bar-wrap"><div class="bid-bar" style="width: {{BID}}%;">{{BID}}</div></div>
+      <span class="bid-badge">{{FAMILY：A认知偏差/B说服/C行为经济/D好奇注意/E社会身份/F决策结构（结构模型标注「F容器」）/组合席}}</span>
+    </div>
+    <!-- ……重复 TOP 席位行…… -->
+    <div class="notice-banner" style="margin-top:14px; margin-bottom:0;">
+      <span>ℹ️</span>
+      <span>{{BID_NOTE：出局张数・多样性约束说明（同族≤3席・六族至少覆盖3族）・组合席咬合逻辑・容器席说明（结构模型不占内容席，主编综合时做装填）}}</span>
+    </div>
+  </section>
+
+  <!-- ============ 5. 作品广场 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">✍️</div>
+      <div><h2>作品广场</h2><div class="sub">机制・钩子・利弊——产物全文与机制落点标注见md产物集</div></div>
+    </div>
+    <!-- 每版一卡：推荐版加 .winner；组合席加 .combo。结构五段：模型头→机制条→钩子大字→利弊→数据条 -->
+    <div class="work-card">
+      <div class="work-head">
+        <div class="work-avatar">{{EMOJI}}</div>
+        <div>
+          <div class="work-name">{{MODEL_NAME}}</div>
+          <div class="work-chips"><span class="work-chip hot">{{FAMILY}}</span><span class="work-chip">{{机制关键词}}</span><span class="work-chip">{{适用场景}}</span></div>
+        </div>
+        <div class="work-score"><span class="num">{{BID}}</span><span>竞拍分</span></div>
+      </div>
+      <div class="work-mech">机制：{{MECH：这版在触发什么心理，一句话}}</div>
+      <div class="work-hook">{{HOOK：钩子原文照录}}<small>{{HOOK_NOTE：机制触发点说明，如「价格锚在此下锚」}}</small></div>
+      <div class="work-pair">
+        <div class="pro"><span class="lab g">✅ 机制为什么有效</span><p>· {{PRO_1：≤20字}}</p><p>· {{PRO_2：≤20字}}</p></div>
+        <div><span class="lab r">⚠️ 机制翻车点</span><p>· {{CON_1：≤20字}}</p><p>· {{CON_2：≤20字}}</p></div>
+      </div>
+      <div class="work-foot">机制落点{{POINTS}}处<div class="meter"><i style="width: {{VOTE_PCT}}%"></i></div><div class="vt">{{AWARDS：获奖胶囊}}</div></div>
+    </div>
+    <!-- ……重复 席位数 张卡…… -->
+    <!-- 机制落点行内标签示例（在md正文中使用）：今晚8点截止<span class="mech-tag">↓稀缺</span> -->
+  </section>
+
+  <!-- ============ 6. 投票矩阵 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">🗳️</div>
+      <div><h2>评审团投票</h2><div class="sub">票权=竞拍分/100 ・ 三维投票 ・ 每票理由必须引用模型机制（防糊涂票）</div></div>
+    </div>
+    <table class="vote-table">
+      <tr><th>评审模型</th><th>票权</th><th>🎯 最佳钩子</th><th>💰 最佳转化</th><th>⚠️ 最佳风险预警</th></tr>
+      <!-- 每位评审一行；理由格式=「投V3：机制名+为何有效」 -->
+      <tr><td>{{VOTER}}</td><td>{{WEIGHT}}</td>
+        <td><span class="vote-pill hook">{{TARGET}}</span>{{REASON：引用机制}}</td>
+        <td><span class="vote-pill conv">{{TARGET}}</span>{{REASON}}</td>
+        <td><span class="vote-pill risk">{{TARGET}}</span>{{REASON}}</td></tr>
+    </table>
+    <div class="award-row">
+      <div class="award-card hook"><div class="a-t">🎯 最佳钩子奖</div><div class="a-w">{{WINNER_H}}</div><div class="a-s">加权 {{SCORE_H}}</div></div>
+      <div class="award-card conv"><div class="a-t">💰 最佳转化奖</div><div class="a-w">{{WINNER_C}}</div><div class="a-s">加权 {{SCORE_C}}</div></div>
+      <div class="award-card risk"><div class="a-t">⚠️ 最佳风险预警奖</div><div class="a-w">{{WINNER_R}}</div><div class="a-s">加权 {{SCORE_R}}</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 7. 黑马版 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">🕳️</div>
+      <div><h2>黑马版</h2><div class="sub">得票最低但机制独门的版本——什么场景下它会翻盘</div></div>
+    </div>
+    <div class="dark-box">
+      <div class="dk-hook">{{DARK_MODEL}}：「{{DARK_HOOK}}」</div>
+      <div class="dk-why">{{DK_WHY：机制分析+翻盘场景，如「公域投票垫底是因为……但受众切换到……时，它的机制唯一有效」}}</div>
+    </div>
+  </section>
+
+  <!-- ============ 8. 主编综合 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-icon">🧠</div>
+      <div><h2>主编综合</h2><div class="sub">模型组合公式・机制冗余检查・条件式投放・A/B测试清单</div></div>
+    </div>
+    <!-- 模型组合公式：杂交版的机制配方，≤3个机制 -->
+    <div class="formula">
+      <span class="f-chip">{{MECH_1：如 损失厌恶（钩子）}}</span><span class="f-op">+</span>
+      <span class="f-chip">{{MECH_2：如 社会认同（中段）}}</span><span class="f-op">+</span>
+      <span class="f-chip">{{MECH_3：如 承诺一致（收尾）}}</span>
+      <span class="f-note">咬合逻辑：{{FORMULA_NOTE：机制之间如何递进咬合，一段话}}</span>
+    </div>
+    <div class="syn-grid">
+      <div class="syn-box rec"><div class="k">📦 推荐交付版</div><div class="v">{{REC_CONTENT：单版直用或杂交方案，段落来源精确标注}}</div></div>
+      <div class="syn-box ab"><div class="k">🧪 A/B测试清单</div><div class="v">{{AB_CONTENT：先测哪两版・看什么指标・跑多久——机制给了归因路径；装填版vs直用版是天然A/B对}}</div></div>
+    </div>
+    <!-- 装填版（容器规则产出）：结构模型入选时必含此块，未入选整块删除 -->
+    <div class="cond-item" style="border:1.5px dashed rgba(13,148,136,.4); background:linear-gradient(135deg,var(--teal-soft),#fff);">
+      <div class="cond-if">🧴 装填版（容器规则）</div>
+      <div class="cond-then">{{FILL_CONTENT：结构模型（如双系统）的结构模板+推荐版文案的装填结果——同文案比结构，变量隔离最干净；与直用版并列交付供A/B}}</div>
+    </div>
+    <div class="cond-item"><div class="cond-if">IF {{CONDITION}}</div><div class="cond-then">用<span class="hl">{{VERSION_NO}}</span>——{{WHY}}</div></div>
+    <!-- ……重复若干条，最多5行…… -->
+  </section>
+
+  <!-- ============ 9. 全会总结 ============ -->
+  <div class="sumcard">
+    <div class="cap">🏁 全会总结<small>没时间看全文，看这一块就够</small></div>
+    <div class="sum-body">
+      <div class="sum-verdict">{{SUM_VERDICT：公式级结论，≤50字，如「身份焦虑驱动→先认同再转化，价格机制只做收尾」}}</div>
+      <div class="sum-awards">
+        <span class="aw-chip a">🎯 最佳钩子・{{WINNER_HOOK}}「{{钩子原话}}」</span>
+        <span class="aw-chip b">💰 最佳转化・{{WINNER_CONV}}「{{一句原话}}」</span>
+        <span class="aw-chip c">⚠️ 最佳预警・{{WINNER_RISK}}「{{一句原话}}」</span>
+        <span class="aw-chip d">🕳️ 黑马・{{DARK_HORSE}}「{{翻盘场景}}」</span>
+      </div>
+      <div class="sum-grid">
+        <div class="sum-box"><h4>📦 推荐组合</h4>
+          <ul><li>{{REC_1：模型组合公式}}</li><li>{{REC_2：核心预期指标}}</li></ul>
+        </div>
+        <div class="sum-box"><h4>🧪 先做的测试（P0）</h4>
+          <ul><li>{{P0_1}}</li><li>{{P0_2}}</li></ul>
+        </div>
+      </div>
+      <div class="sum-if">
+        <h4>🧭 对号入座（机制即条件变量）</h4>
+        <div class="ifrow"><span class="c">{{CONDITION_1：受众/场景}}</span><span class="arrow">→</span><span class="r">{{THEN_1：用哪个机制的版本}}</span></div>
+        <div class="ifrow"><span class="c">{{CONDITION_2}}</span><span class="arrow">→</span><span class="r">{{THEN_2}}</span></div>
+        <div class="ifrow"><span class="c">{{CONDITION_3}}</span><span class="arrow">→</span><span class="r">{{THEN_3：最多5行}}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 10. 页脚 ============ -->
+  <footer>
+    📅 {{DATE}} · <span class="brand">🧠 心理模型裂变 psych-fission v1.1</span><br>
+    ⚠️ 模型卡为写作透镜的模拟，不用于心理诊断；心理机制不得用于操纵弱势群体{{DISCLAIMER：广告类/医疗/金融对应提示}}<br>
+    🎫 机制：根因挖掘（5 Whys）→ 模型竞拍（≥60）→ 裂变写作（机制即写法）→ 加权三维投票（理由必引机制）→ 主编综合（组合公式≤3机制）・ 黑马版保留
+  </footer>
+
+</div>
+</body>
+</html>
